@@ -42,6 +42,7 @@
         await this.analyseAuthcode();
       }else if(this.$store.state.Token == ''){
         this.$router.push({path: '/login'});
+        
       }else{
         this.fullscreenLoading = false;
       }
@@ -49,7 +50,7 @@
     async activated() {
       if(this.$store.state.Token=='' && this.$store.state.authCode == ''){
         // this.getAuthcode("authcode", window.location.hash);
-        this.fullscreenLoading = true;
+        this.fullscreenLoading = false;
       }else{
         this.fullscreenLoading = false;
       }

@@ -40,11 +40,9 @@
           v-model="applyForm.接班人"
           placeholder="填写邮箱号"
         ></el-input>
-      </el-form-item>
+      </el-form-item>  
     </el-form>
-    <el-button type="primary" @click="Submit()" class="btn-bottom"
-      >提交</el-button
-    >
+    <el-button type="primary" @click="Submit('applyForm')" class="btn-bottom">提交</el-button>
   </div>
 </template>
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   //方法三
   const instance = axios.create({
-    baseURL: 'http://mobileapi.gree.com/wfApi/api',
+    baseURL: 'https://mobileapi.gree.com/wfApi/api',
     timeout: 5000,
   });
   return instance(config);

@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    AppID: '',
-    AppKey: '',
+    AppID: 'df8fc13c-a2aa-4a70-927c-a597d0179027',
+    AppKey: '79c81fe2-1c10-43e4-815f-a82b708660bd',
     authCode: '',
     UserID: '',//邮箱号
     UserName: '',//姓名
@@ -27,6 +27,7 @@ const store = new Vuex.Store({
     GroupLeader: [], // 组长
     EmpID: '',//员工编号  旧
   },
+  
   mutations:{
     initPerson(state,data){
       state.UserID = data.UserID;

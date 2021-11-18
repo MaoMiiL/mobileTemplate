@@ -1,11 +1,10 @@
 <template>
-  <div >
+  <div>
     <span class="title">交接班申请表</span>
     <el-form
       label-width="90px"
       :model="applyForm"
       :rules="rules"
-      status-icon
       ref="applyForm"
     >
       <el-form-item label="交班人">
@@ -14,7 +13,7 @@
       <el-form-item label="邮箱号">
         <el-input v-model="applyForm.交班人" readonly></el-input>
       </el-form-item>
-      <el-form-item label="交班时间" required >
+      <el-form-item label="交班时间" required>
         <el-date-picker
           type="datetime"
           placeholder="选择进入时间"
@@ -29,28 +28,31 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="生产情况" required prop="desc">
+      <el-form-item label="生产情况" prop="当班生产情况">
         <el-input type="textarea" v-model="applyForm.当班生产情况"></el-input>
       </el-form-item>
       <el-form-item label="注意事项">
         <el-input type="textarea" v-model="applyForm.注意事项"></el-input>
       </el-form-item>
-      <el-form-item label="接班人" required prop="nextp">
+      <el-form-item label="接班人" required prop="接班人">
         <el-input
           v-model="applyForm.接班人"
           placeholder="填写邮箱号"
         ></el-input>
-      </el-form-item>  
+      </el-form-item>
     </el-form>
-    <el-button type="primary" @click="Submit('applyForm')" class="btn-bottom">提交</el-button>
+    <el-button type="primary" @click="Submit('applyForm')" class="btn-bottom"
+      >提交</el-button
+    >
   </div>
 </template>
 
 <script>
+import { request } from "../axios/request";
 export default {
   name: "Left",
   data() {
-    return {     
+    return {
       //表单内容
       applyForm: {
         交班人: "",
@@ -60,11 +62,15 @@ export default {
         班次: "白班",
         接班人: "",
       },
-      name:'',
-      rules:{      
-        desc:[{ required: true, message: '请描述当班生产情况', trigger: 'blur' }],
-        nextp:[{ required: true, message: '请填写接班人的邮箱号', trigger: 'blur' }]
-      }
+      name: "",
+      rules: {
+        当班生产情况: [
+          { required: true, message: "请描述当班生产情况", trigger: "blur" },
+        ],
+        接班人: [
+          { required: true, message: "请填写接班人的邮箱号", trigger: "blur" },
+        ],
+      },
     };
   },
   //初始化组件的值
@@ -78,22 +84,23 @@ export default {
       this.$refs[applyForm].validate((valid) => {
         if (valid) {
           let param = {
-            WFID: "",
-            WFNodeOperationID: "",
+            WFID: "8008",
+            WFNodeOperationID: "40866",
             MainData: this.applyForm,
           };
-          axios
-            .create({
-              headers: {
-                appid: "",
-                appkey: "",
-                token: this.$store.state.Token,
-                "Content-Type": "application/json",
-              },
-            })
-            .post("http://mobileapi.gree.com/wfapi/api/Business", param)
+          request({
+            headers: {
+              appid: this.$store.state.AppID,
+              appkey: this.$store.state.AppKey,
+              token: this.$store.state.Token,
+              "Content-Type": "application/json",
+            },
+            url: "/Business",
+            data: param,
+            method: "POST",
+          })
             .then((res) => {
-              console.log("Submit post data:------", param);
+              // console.log("Submit post data:------", param);
               if (res.data.JsonMessage == "") {
                 alert("提交成功！");
               } else {
@@ -123,10 +130,10 @@ export default {
   letter-spacing: 4px;
   font-weight: 700;
 }
-.btn-bottom{
+.btn-bottom {
   width: 100%;
-  position:absolute;
-  left:0;
+  position: absolute;
+  left: 0;
   bottom: 0;
 }
 </style>
